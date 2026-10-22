@@ -35,6 +35,9 @@
     main.removeAttribute("aria-hidden");
     doc.classList.remove("locked");
     
+    // Try to start music again when opening finishes (backup for mobile)
+    setTimeout(function() { tryStartMusic(); }, 500);
+    
     if (skipFade) {
       opening.style.display = "none";
     } else {
@@ -366,26 +369,15 @@
     // Audio events
     musicAudio.addEventListener("play", function () { updatePlayState(true); musicStarted = true; });
     musicAudio.addEventListener("pause", function () { updatePlayState(false); });
-    
-    // Stop music when user leaves the page or switches tabs
-    document.addEventListener("visibilitychange", function() {
-      if (document.hidden && musicAudio && !musicAudio.paused) {
-        musicAudio.pause();
-      }
-    });
-    
-    // Also handle page unload
-    window.addEventListener("pagehide", function() {
-      if (musicAudio && !musicAudio.paused) {
-        musicAudio.pause();
-      }
-    });
-    
-    window.addEventListener("beforeunload", function() {
-      if (musicAudio && !musicAudio.paused) {
-        musicAudio.pause();
-      }
-    });
+  }
+  
+  // Function to start music from opening button
+  function tryStartMusic() {
+    if (musicAudio && !musicStarted) {
+      musicAudio.play().catch(function () {
+        console.log("Music autoplay blocked - user can use toggle button");
+      });
+    }
   }
 
   /* ---------------------------------------------------------- boot */
