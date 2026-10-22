@@ -11,10 +11,10 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Akshara &amp; Akshay | Wedding Invitation">
   <meta property="og:description" content="Together in every chapter. Celebrating the wedding of Akshara Shibu and Akshay Jayakumar on 18 November 2026.">
-  <meta property="og:image" content="https://YOUR-DOMAIN/assets/og/og-image.jpg">
+  <meta property="og:image" content="https://akshara-akshay.vercel.app/assets/og/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://YOUR-DOMAIN/">
+  <meta property="og:url" content="https://akshara-akshay.vercel.app/">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 48'%3E%3Cg fill='none' stroke='%23B39A64' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 4c1.8 2.6 2.4 4.6 0 7.2-2.4-2.6-1.8-4.6 0-7.2z'/%3E%3Cpath d='M10 14h12l-1.6 3.2h-8.8zM16 17.2V22M7 22h18l-2 3.6H9zM16 25.6V36M10 36h12l2 4H8z'/%3E%3C/g%3E%3C/svg%3E">
@@ -57,6 +57,31 @@
 <button class="music-toggle" id="musicToggle" type="button" aria-pressed="false" aria-label="Play music" hidden>
   <svg viewBox="0 0 24 24" aria-hidden="true"><path class="ico-play" d="M9 7v10l8-5z" fill="currentColor"/><path class="ico-pause" d="M8 7h3v10H8zM13 7h3v10h-3z" fill="currentColor"/></svg>
 </button>
+
+<!-- Music Player Bar -->
+<div class="music-player" id="musicPlayer" hidden>
+  <div class="player-controls">
+    <button class="player-btn" id="playerPlayPause" type="button" aria-label="Play">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path class="ico-play" d="M9 7v10l8-5z" fill="currentColor"/>
+        <path class="ico-pause" d="M8 7h3v10H8zM13 7h3v10h-3z" fill="currentColor"/>
+      </svg>
+    </button>
+    <div class="player-info">
+      <span class="player-title" id="playerTitle">Wedding Music</span>
+      <span class="player-time">
+        <span id="playerCurrent">0:00</span> / <span id="playerDuration">0:00</span>
+      </span>
+    </div>
+  </div>
+  <div class="player-progress">
+    <input type="range" id="playerSeek" min="0" max="100" value="0" step="0.1" aria-label="Seek">
+  </div>
+  <div class="player-volume">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" fill="currentColor"/></svg>
+    <input type="range" id="playerVolume" min="0" max="100" value="70" aria-label="Volume">
+  </div>
+</div>
 
 <!-- ============ OPEN INVITATION ============ -->
 <div class="opening" id="opening" role="dialog" aria-label="Wedding invitation">

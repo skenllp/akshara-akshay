@@ -330,15 +330,108 @@
   function initMusic() {
     var src = CFG.music && CFG.music.src;
     var btn = $("#musicToggle");
+    var player = $("#musicPlayer");
+    var playPauseBtn = $("#playerPlayPause");
+    var seekBar = $("#playerSeek");
+    var volumeBar = $("#playerVolume");
+    var currentTime = $("#playerCurrent");
+    var durationEl = $("#playerDuration");
+    
     if (!src) return;                  // stays hidden until a track is supplied
-    var audio = new Audio(); audio.src = src; audio.loop = true; audio.preload = "none";
+    
+    var audio = new Audio();
+    audio.src = src;
+    audio.loop = true;
+    audio.preload = "auto";
+    audio.volume = 0.7;
+    
     btn.hidden = false;
-    btn.addEventListener("click", function () {
-      var on = btn.getAttribute("aria-pressed") === "true";
-      if (on) { audio.pause(); } else { audio.play().catch(function () {}); }
-      btn.setAttribute("aria-pressed", on ? "false" : "true");
-      btn.setAttribute("aria-label", on ? "Play music" : "Pause music");
+    player.hidden = false;
+    
+    var isPlaying = false;
+    var autoplayAttempted = false;
+    
+    // Format time helper
+    function formatTime(seconds) {
+      if (!isFinite(seconds)) return "0:00";
+      var mins = Math.floor(seconds / 60);
+      var secs = Math.floor(seconds % 60);
+      return mins + ":" + (secs < 10 ? "0" + secs : secs);
+    }
+    
+    // Update UI state
+    function updatePlayState(playing) {
+      isPlaying = playing;
+      btn.setAttribute("aria-pressed", playing ? "true" : "false");
+      btn.setAttribute("aria-label", playing ? "Pause music" : "Play music");
+      playPauseBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
+      playPauseBtn.classList.toggle("playing", playing);
+    }
+    
+    // Play/Pause handlers
+    function togglePlay() {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play().catch(function () {
+          updatePlayState(false);
+        });
+      }
+    }
+    
+    btn.addEventListener("click", togglePlay);
+    playPauseBtn.addEventListener("click", togglePlay);
+    
+    // Audio events
+    audio.addEventListener("play", function () { updatePlayState(true); });
+    audio.addEventListener("pause", function () { updatePlayState(false); });
+    audio.addEventListener("loadedmetadata", function () {
+      durationEl.textContent = formatTime(audio.duration);
+      seekBar.max = audio.duration;
     });
+    
+    audio.addEventListener("timeupdate", function () {
+      if (!seekBar.dataset.seeking) {
+        seekBar.value = audio.currentTime;
+        currentTime.textContent = formatTime(audio.currentTime);
+      }
+    });
+    
+    // Seek bar
+    seekBar.addEventListener("input", function () {
+      seekBar.dataset.seeking = "true";
+      currentTime.textContent = formatTime(parseFloat(seekBar.value));
+    });
+    
+    seekBar.addEventListener("change", function () {
+      audio.currentTime = parseFloat(seekBar.value);
+      delete seekBar.dataset.seeking;
+    });
+    
+    // Volume control
+    volumeBar.addEventListener("input", function () {
+      audio.volume = parseFloat(volumeBar.value) / 100;
+    });
+    
+    // Autoplay after opening dismissal
+    function attemptAutoplay() {
+      if (autoplayAttempted || !opened) return;
+      autoplayAttempted = true;
+      setTimeout(function () {
+        audio.play().catch(function () {
+          // Autoplay blocked - user can manually start via buttons
+          updatePlayState(false);
+        });
+      }, 800);
+    }
+    
+    // Hook into opening finish
+    var checkInterval = setInterval(function () {
+      if (opened) {
+        attemptAutoplay();
+        clearInterval(checkInterval);
+      }
+    }, 200);
   }
 
   /* ---------------------------------------------------------- boot */
