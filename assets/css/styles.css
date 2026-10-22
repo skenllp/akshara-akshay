@@ -256,7 +256,7 @@ section[id]{scroll-margin-top:56px}
 .field label,.field legend{display:block;font:600 11px var(--f-ui);letter-spacing:.2em;text-transform:uppercase;color:var(--brown);margin-bottom:10px;padding:0}
 .field label i,.field legend i{color:var(--burgundy);font-style:normal}
 .field label small{text-transform:none;letter-spacing:.02em;font-weight:500;color:#6b5f52;font-size:12px}
-.field input[type=text],.field input[type=tel],.field select,.field textarea{width:100%;font:400 18px var(--f-text);color:var(--brown);background:var(--cream);border:1px solid rgba(179,154,100,.75);border-radius:0;padding:13px 14px;min-height:50px;transition:border-color .3s,box-shadow .3s;-webkit-appearance:none;appearance:none}
+.field input[type=text],.field input[type=tel],.field select,.field textarea{width:100%;font:400 18px var(--f-text);color:var(--brown);background:var(--cream);border:1px solid rgba(179,154,100,.75);border-radius:2px;padding:13px 14px;min-height:50px;transition:border-color .3s,box-shadow .3s;-webkit-appearance:none;appearance:none}
 .field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%237D6733' stroke-width='1.3'/></svg>");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
 .field select option{background:var(--cream);color:var(--brown);border:none;padding:8px}
 .field textarea{resize:vertical;min-height:110px}
@@ -442,7 +442,7 @@ section[id]{scroll-margin-top:56px}
 #rsvp .field label,#rsvp .field legend{color:#E3C98A}
 #rsvp .field label small{color:#cdbb92}
 #rsvp .field label i,#rsvp .field legend i{color:#f0a79a}
-#rsvp .field input[type=text],#rsvp .field input[type=tel],#rsvp .field select,#rsvp .field textarea{background:rgba(255,249,237,.07);color:var(--cream);border-color:rgba(227,201,138,.5)}
+#rsvp .field input[type=text],#rsvp .field input[type=tel],#rsvp .field select,#rsvp .field textarea{background:rgba(255,249,237,.07);color:var(--cream);border:1px solid rgba(227,201,138,.5);border-radius:2px}
 #rsvp .field input::placeholder{color:rgba(255,249,237,.45)}
 #rsvp .field select option{color:var(--brown);background:var(--cream);border:none}
 #rsvp .field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23E3C98A' stroke-width='1.3'/></svg>")}
