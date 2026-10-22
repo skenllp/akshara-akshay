@@ -66,6 +66,9 @@
       if (started) return;
       started = true;
       btn.disabled = true;
+      
+      // Start music on user interaction (works on mobile)
+      if (typeof startMusic === "function") startMusic();
 
       if (reduced || !video) { finishOpening(false); return; }
 
@@ -327,21 +330,20 @@
   }
 
   /* ---------------------------------------------------------- optional music */
+  var musicAudio = null;
   function initMusic() {
     var src = CFG.music && CFG.music.src;
     var btn = $("#musicToggle");
     
     if (!src) return;                  // stays hidden until a track is supplied
     
-    var audio = new Audio();
-    audio.src = src;
-    audio.loop = true;
-    audio.preload = "auto";
-    audio.volume = 0.7;
+    musicAudio = new Audio();
+    musicAudio.src = src;
+    musicAudio.loop = true;
+    musicAudio.preload = "auto";
+    musicAudio.volume = 0.7;
     
     btn.hidden = false;
-    
-    var autoplayAttempted = false;
     
     // Update UI state
     function updatePlayState(playing) {
@@ -353,35 +355,24 @@
     btn.addEventListener("click", function () {
       var isPlaying = btn.getAttribute("aria-pressed") === "true";
       if (isPlaying) {
-        audio.pause();
+        musicAudio.pause();
       } else {
-        audio.play().catch(function () {});
+        musicAudio.play().catch(function () {});
       }
     });
     
     // Audio events
-    audio.addEventListener("play", function () { updatePlayState(true); });
-    audio.addEventListener("pause", function () { updatePlayState(false); });
-    
-    // Autoplay after opening dismissal
-    function attemptAutoplay() {
-      if (autoplayAttempted || !opened) return;
-      autoplayAttempted = true;
-      setTimeout(function () {
-        audio.play().catch(function () {
-          // Autoplay blocked - user can manually start via button
-          updatePlayState(false);
-        });
-      }, 800);
+    musicAudio.addEventListener("play", function () { updatePlayState(true); });
+    musicAudio.addEventListener("pause", function () { updatePlayState(false); });
+  }
+  
+  // Global function to start music (called from opening button)
+  function startMusic() {
+    if (musicAudio) {
+      musicAudio.play().catch(function () {
+        // Silently fail if blocked
+      });
     }
-    
-    // Hook into opening finish
-    var checkInterval = setInterval(function () {
-      if (opened) {
-        attemptAutoplay();
-        clearInterval(checkInterval);
-      }
-    }, 200);
   }
 
   /* ---------------------------------------------------------- boot */
