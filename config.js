@@ -3,8 +3,8 @@
    Edit this file only; no other code needs to change.
 ------------------------------------------------------------------- */
 window.WEDDING_CONFIG = {
-  // Countdown target — 18 Nov 2026, 10:00 AM India Standard Time (UTC+05:30)
-  eventDateISO: "2026-11-18T10:00:00+05:30",
+  // Countdown target — the reception: 22 Nov 2026, 6:00 PM India Standard Time (UTC+05:30)
+  eventDateISO: "2026-11-22T18:00:00+05:30",
 
   rsvp: {
     // Paste the Google Apps Script "Web app" URL here (see google-sheets/SETUP.md).
@@ -12,7 +12,7 @@ window.WEDDING_CONFIG = {
     sheetsUrl: "https://script.google.com/macros/s/AKfycbxIeQkgmjvZ8GEYGTmmDFBMs8wY4ZBIH753Ui1czkqlXD2qxPkw1l5zz0CyZXStT0YhRA/exec",
 
     // Which celebration the RSVP refers to: "wedding" | "reception" | "both"
-    scope: "wedding",
+    scope: "reception",
   },
 
   // The separate reception on 22 Nov 2026 (Eden Convention Centre).

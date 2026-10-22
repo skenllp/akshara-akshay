@@ -570,3 +570,53 @@ section[id]{scroll-margin-top:0}
 #groom .ornament{color:#D9C592}
 #countdown{background:var(--ivory)!important;border-block:1px solid rgba(179,154,100,.45)}
 #story .eyebrow,#bride .eyebrow,#countdown .eyebrow{color:var(--gold-deep)}
+
+/* ---------- v9: wedding (private) + reception (guests) ---------- */
+.private-note{font:italic 400 18px var(--f-text);color:var(--gold-deep);margin:-6px 0 18px}
+.hero-recep{margin-top:.6cqw!important;letter-spacing:.2em!important;color:var(--burgundy)!important}
+.panel .venue-tag{font:italic 400 17px/1.4 var(--f-text);margin:4px 0 8px;color:#E8D6A0}
+.panel .venue-addr{font-size:15px!important;line-height:1.5}
+.itinerary{background-color:var(--ivory);padding-block:clamp(72px,12vw,120px)}
+.itinerary .title{margin-bottom:0}
+.it-lead{font:italic 400 clamp(18px,4.6vw,22px) var(--f-text);color:var(--burgundy);margin-bottom:30px}
+.it-list{list-style:none;text-align:left;border-top:1px solid rgba(179,154,100,.5)}
+.it-list li{display:grid;grid-template-columns:6.4em 1fr;gap:14px;padding:16px 4px;border-bottom:1px solid rgba(179,154,100,.5);align-items:baseline}
+.it-list time{font:600 12px var(--f-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
+.it-list span{font:500 clamp(19px,4.8vw,23px)/1.3 var(--f-display)}
+.it-list em{display:block;font:italic 400 16px var(--f-text);color:#6b5f52;margin-top:2px}
+.family{background:var(--cream);padding-block:clamp(72px,12vw,110px)}
+.title.sm{font-size:clamp(34px,7vw,52px)}
+.fam-text{font-size:clamp(17px,2.2vw,19px);max-width:46ch;margin:0 auto 26px}
+.fam-names strong{display:block;font:500 clamp(26px,5vw,34px) var(--f-display)}
+.fam-names span,.fam-join{font:italic 400 18px var(--f-text);color:var(--gold-deep)}
+.fam-parents{display:grid;gap:8px;margin:12px 0 22px;font:500 clamp(19px,4.2vw,22px)/1.3 var(--f-display)}
+.fam-parents.small{font-size:clamp(16px,3.8vw,19px);gap:14px;margin-top:8px}
+@media(min-width:560px){.fam-parents{grid-template-columns:1fr 1fr;gap:24px}}
+.fam-close{font:italic 400 19px var(--f-text);color:var(--burgundy);margin-top:10px}
+
+/* ---------- v10: supplied paper backgrounds (frame / lamp / jasmine / blush) ---------- */
+#ceremony,#bride{
+  background:#F9F0DF center/contain no-repeat!important;
+  min-height:min(100svh,calc(100vw*1672/941))!important;
+  padding:0!important;align-items:center!important;justify-content:center;text-shadow:none!important;
+}
+#ceremony{background-image:url(../img/paper-lamp.webp)!important}
+#bride{background-image:url(../img/paper-frame.webp)!important}
+#ceremony::before,#ceremony::after,#bride::before,#bride::after{display:none!important}
+#ceremony>.container,#bride>.container{
+  width:min(440px,calc(100% - 72px))!important;margin-inline:auto;
+  background:none!important;border:0!important;box-shadow:none!important;padding:40px 0!important;
+}
+#ceremony>.container::before,#ceremony>.container::after,#bride>.container::before,#bride>.container::after{display:none!important}
+#story{
+  background:url(../img/paper-story-top.webp) top center/100% auto no-repeat,
+             url(../img/paper-story-bot.webp) bottom center/100% auto no-repeat,#F9F0DF!important;
+  padding-top:clamp(120px,24vw,170px)!important;padding-bottom:clamp(110px,22vw,160px)!important;
+}
+#story>.container{padding-left:clamp(44px,12vw,0px)}
+@media(max-width:700px){#story>.container{width:calc(100% - 20px)!important;padding-left:44px;padding-right:12px}}
+#family{
+  background:url(../img/paper-fam-top.webp) top center/100% auto no-repeat,
+             url(../img/paper-fam-bot.webp) bottom center/100% auto no-repeat,#F6EEE0!important;
+  padding-top:clamp(120px,22vw,180px)!important;padding-bottom:clamp(130px,26vw,200px)!important;
+}
