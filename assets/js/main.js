@@ -35,6 +35,9 @@
     main.removeAttribute("aria-hidden");
     doc.classList.remove("locked");
     
+    // Try to start music again when opening finishes (backup for mobile)
+    setTimeout(function() { tryStartMusic(); }, 500);
+    
     if (skipFade) {
       opening.style.display = "none";
     } else {
@@ -67,8 +70,8 @@
       started = true;
       btn.disabled = true;
       
-      // Start music on user interaction (works on mobile)
-      if (typeof startMusic === "function") startMusic();
+      // Start music on user interaction (mobile-friendly)
+      tryStartMusic();
 
       if (reduced || !video) { finishOpening(false); return; }
 
@@ -331,6 +334,8 @@
 
   /* ---------------------------------------------------------- optional music */
   var musicAudio = null;
+  var musicStarted = false;
+  
   function initMusic() {
     var src = CFG.music && CFG.music.src;
     var btn = $("#musicToggle");
@@ -362,20 +367,21 @@
     });
     
     // Audio events
-    musicAudio.addEventListener("play", function () { updatePlayState(true); });
+    musicAudio.addEventListener("play", function () { updatePlayState(true); musicStarted = true; });
     musicAudio.addEventListener("pause", function () { updatePlayState(false); });
   }
   
-  // Global function to start music (called from opening button)
-  function startMusic() {
-    if (musicAudio) {
+  // Function to start music from opening button
+  function tryStartMusic() {
+    if (musicAudio && !musicStarted) {
       musicAudio.play().catch(function () {
-        // Silently fail if blocked
+        console.log("Music autoplay blocked - user can use toggle button");
       });
     }
   }
 
   /* ---------------------------------------------------------- boot */
+  initMusic();        // Initialize music first so it's ready when opening button is clicked
   initReveal();
   initOpening();
   initNav();
@@ -383,5 +389,4 @@
   initReception();
   initRSVP();
   initClosing();
-  initMusic();
 })();
