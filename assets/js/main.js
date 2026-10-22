@@ -162,7 +162,7 @@
 
   /* ---------------------------------------------------------- optional reception */
   function initReception() {
-    var r = $("#reception"); if (r && CFG.reception && CFG.reception.enabled) r.hidden = false;
+    if (CFG.reception && CFG.reception.enabled) $("#reception").hidden = false;
   }
 
   /* ---------------------------------------------------------- RSVP */
