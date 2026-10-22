@@ -24,6 +24,6 @@ window.WEDDING_CONFIG = {
   // Optional background music. Leave `src` empty to keep the toggle hidden.
   // Only add a track you have the rights to use, e.g. "assets/audio/music.mp3".
   music: {
-    src: "music.webm",
+    src: "assets/audio/music.mp3",
   },
 };

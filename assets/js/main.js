@@ -358,8 +358,7 @@
     
     // Toggle play/pause
     btn.addEventListener("click", function () {
-      var isPlaying = btn.getAttribute("aria-pressed") === "true";
-      if (isPlaying) {
+      if (!musicAudio.paused) {
         musicAudio.pause();
       } else {
         musicAudio.play().catch(function () {});
@@ -367,13 +366,22 @@
     });
     
     // Audio events
-    musicAudio.addEventListener("play", function () { updatePlayState(true); musicStarted = true; });
+    musicAudio.addEventListener("play", function () { updatePlayState(true); });
+    musicAudio.addEventListener("playing", function () { updatePlayState(true); musicStarted = true; });
     musicAudio.addEventListener("pause", function () { updatePlayState(false); });
+    musicAudio.addEventListener("error", function () { btn.hidden = true; });
+
+    // Pause when the page is hidden/backgrounded, resume only if it was playing
+    var wasPlaying = false;
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { wasPlaying = !musicAudio.paused; musicAudio.pause(); }
+      else if (wasPlaying) { musicAudio.play().catch(function () {}); }
+    });
   }
   
   // Function to start music from opening button
   function tryStartMusic() {
-    if (musicAudio && !musicStarted) {
+    if (musicAudio && !musicStarted && musicAudio.paused) {
       musicAudio.play().catch(function () {
         console.log("Music autoplay blocked - user can use toggle button");
       });
