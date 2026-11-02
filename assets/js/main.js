@@ -31,6 +31,7 @@
     if (opened) return;
     opened = true;
     hero.classList.add("revealed");
+    playHeroFilm();
     main.removeAttribute("inert");
     main.removeAttribute("aria-hidden");
     doc.classList.remove("locked");
@@ -180,47 +181,36 @@
     }
   }
 
-  /* ---------------------------------------------------------- hero: golden motes + soft parallax */
-  function initHero() {
-    var scene = $("#heroScene"), motes = $("#heroMotes");
-    if (!scene || reduced) return;
+  /* ---------------------------------------------------------- hero film + golden motes */
+  function showHeroStill() {
+    var end = $("#heroEnd"), v = $("#heroVideo");
+    if (end) end.hidden = false;
+    if (v) v.style.display = "none";
+  }
+  function playHeroFilm() {
+    var v = $("#heroVideo");
+    if (!v) return;
+    if (reduced) { showHeroStill(); return; }          // respect reduced motion: calm still frame
+    v.addEventListener("error", showHeroStill, { once: true });
+    var p;
+    try { v.currentTime = 0; p = v.play(); } catch (e) { showHeroStill(); return; }
+    if (p && p.catch) p.catch(showHeroStill);
+    // plays once and rests on its last frame (no loop)
+  }
 
-    // delicate golden particles (few, cheap, CSS-animated)
+  function initHero() {
+    var motes = $("#heroMotes");
+    if (!motes || reduced) return;
     var frag = document.createDocumentFragment();
-    for (var i = 0; i < 18; i++) {
+    for (var i = 0; i < 12; i++) {
       var m = document.createElement("i");
-      var size = 2 + Math.random() * 3.5;
-      m.style.cssText = "left:" + (Math.random() * 100).toFixed(1) + "%;top:" + (35 + Math.random() * 60).toFixed(1) + "%;" +
-        "width:" + size.toFixed(1) + "px;height:" + size.toFixed(1) + "px;" +
-        "--dx:" + ((Math.random() - 0.5) * 40).toFixed(0) + "px;" +
+      var size = 2 + Math.random() * 3;
+      m.style.cssText = "left:" + (Math.random() * 100).toFixed(1) + "%;top:" + (40 + Math.random() * 55).toFixed(1) + "%;" +
+        "width:" + size.toFixed(1) + "px;height:" + size.toFixed(1) + "px;--dx:" + ((Math.random() - 0.5) * 40).toFixed(0) + "px;" +
         "animation-duration:" + (9 + Math.random() * 9).toFixed(1) + "s;animation-delay:-" + (Math.random() * 14).toFixed(1) + "s";
       frag.appendChild(m);
     }
     motes.appendChild(frag);
-
-    // scroll + pointer parallax (writes two CSS variables; the CSS does the rest)
-    var tx = 0, ty = 0, cx = 0, cy = 0, sy = 0, ticking = false, visible = true;
-    function frame() {
-      ticking = false;
-      cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
-      scene.style.setProperty("--px", cx.toFixed(2));
-      scene.style.setProperty("--py", cy.toFixed(2));
-      scene.style.setProperty("--sy", sy.toFixed(1) + "px");
-      if (Math.abs(tx - cx) > 0.01 || Math.abs(ty - cy) > 0.01) request();
-    }
-    function request() { if (!ticking && visible) { ticking = true; requestAnimationFrame(frame); } }
-    window.addEventListener("scroll", function () { sy = Math.min(window.scrollY, window.innerHeight) * 0.06; request(); }, { passive: true });
-    if (window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
-      hero.addEventListener("pointermove", function (e) {
-        var r = hero.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-        ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
-        request();
-      });
-    }
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; scene.classList.toggle("paused", !visible); }, { threshold: 0 }).observe(hero);
-    }
   }
 
   /* ---------------------------------------------------------- RSVP */

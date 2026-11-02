@@ -743,3 +743,53 @@ section[id]{scroll-margin-top:0}
 .happ-list p{font-size:clamp(16px,4.2vw,18px);line-height:1.55;color:#4a4036;margin-top:4px}
 .happening .rule{margin:34px auto 26px}
 .happ-close{font:italic 500 clamp(24px,6.4vw,34px)/1.3 var(--f-display);color:var(--burgundy);text-wrap:balance}
+
+/* ============================================================
+   v12 — every section is one full "page"; Groom + Bride share the Our Story paper
+   ============================================================ */
+#story,#groom,#bride,#countdown,#happening,#family,#ceremony,#village,#rsvp{
+  min-height:var(--fh)!important;display:flex!important;align-items:center!important;justify-content:center}
+
+/* groom + bride: same paper background as Our Story, text sits directly on it */
+#groom,#bride{
+  background:url(../img/paper-story-top.webp) top center/100% auto no-repeat,
+             url(../img/paper-story-bot.webp) bottom center/100% auto no-repeat,#F9F0DF!important;
+  padding-top:clamp(120px,24vw,170px)!important;padding-bottom:clamp(110px,22vw,160px)!important;
+  overflow:hidden!important}
+#groom::before,#groom::after,#bride::before,#bride::after{display:none!important}
+#groom>.container,#bride>.container{
+  width:min(640px,100% - 48px)!important;max-width:none;margin:0 auto!important;
+  padding:0 clamp(44px,12vw,0px) 0 clamp(44px,12vw,0px)!important;
+  background:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+#groom>.container::after,#bride>.container::after{display:none}
+@media(max-width:700px){
+  #groom>.container,#bride>.container{width:calc(100% - 20px)!important;padding-left:44px!important;padding-right:12px!important}
+}
+#village{align-items:flex-end!important}
+/* ceremony: paper fills the whole screen page (no bands above/below on tall phones) */
+@media (max-aspect-ratio:9/16){#ceremony{background-size:100% 100%!important}}
+
+/* ============================================================
+   v13 — countdown wears the Thank-You paper; groom + bride wear the Ceremony paper
+   ============================================================ */
+#countdown{
+  background:url(../img/paper-fam-top.webp) top center/100% auto no-repeat,
+             url(../img/paper-fam-bot.webp) bottom center/100% auto no-repeat,#F6EEE0!important;
+  padding-top:clamp(120px,22vw,180px)!important;padding-bottom:clamp(130px,26vw,200px)!important;
+  border-block:0!important;overflow:hidden!important}
+#groom,#bride{
+  background:#F9F0DF url(../img/paper-lamp.webp) center/contain no-repeat!important;
+  padding:0!important}
+@media (max-aspect-ratio:9/16){#groom,#bride{background-size:100% 100%!important}}
+#groom>.container,#bride>.container{
+  width:min(440px,calc(100% - 72px))!important;margin-inline:auto!important;padding:40px 0!important}
+@media(max-width:700px){
+  #groom>.container,#bride>.container{width:calc(100% - 72px)!important;padding:40px 0!important}
+}
+
+/* ---------- v14: hero film ---------- */
+.hero-video{z-index:1}
+.hero-end{z-index:1}
+.hero-sun,.hero-sweep{display:none}
+.hero-scene{overflow:hidden}
+.hero-motes{z-index:2}
