@@ -793,3 +793,9 @@ section[id]{scroll-margin-top:0}
 .hero-sun,.hero-sweep{display:none}
 .hero-scene{overflow:hidden}
 .hero-motes{z-index:2}
+
+/* opening: skip button (shown once the intro video starts) */
+.opening-skip{position:absolute;right:5cqw;bottom:6%;z-index:3;padding:.65em 1.4em;border:1px solid rgba(255,249,237,.7);border-radius:999px;background:rgba(40,30,20,.35);color:var(--cream);font:600 max(11px,2.8cqw)/1 var(--f-ui);letter-spacing:.24em;text-transform:uppercase;cursor:pointer;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s,background .3s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.opening.started .opening-skip{opacity:1;visibility:visible}
+.opening.leaving .opening-skip{opacity:0}
+.opening-skip:hover{background:rgba(40,30,20,.6)}

@@ -76,6 +76,12 @@
 
       if (reduced || !video) { finishOpening(false); return; }
 
+      var skipBtn = $("#skipBtn");
+      if (skipBtn) {
+        opening.classList.add("started");
+        skipBtn.addEventListener("click", function () { finishOpening(false); });
+      }
+
       var done = false;
       function end() { if (done) return; done = true; finishOpening(false); }
       var dur = isFinite(video.duration) && video.duration > 0 ? video.duration : 5;
