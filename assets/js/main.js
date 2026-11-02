@@ -43,7 +43,7 @@
       opening.style.display = "none";
     } else {
       opening.classList.add("leaving");
-      setTimeout(function () { opening.style.display = "none"; }, 1500);
+      setTimeout(function () { opening.style.display = "none"; }, 1100);
     }
     var v = $("#openingVideo");
     if (v) { try { v.pause(); } catch (e) {} }
@@ -84,7 +84,7 @@
       video.addEventListener("error", end, { once: true });
       // pre-empt the final frame so the crossfade begins as playback finishes
       video.addEventListener("timeupdate", function () {
-        if (video.duration && video.currentTime >= video.duration - 0.35) end();
+        if (video.duration && video.currentTime >= video.duration - 0.3) end();
       });
 
       var stall = setTimeout(end, 4500);           // video never started playing

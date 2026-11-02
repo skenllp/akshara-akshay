@@ -24,7 +24,7 @@ window.WEDDING_CONFIG = {
     time: "11:30 AM onwards",
     venueName: "John's Village",
     address: "Mulanthuruthy, Ernakulam",
-    mapsUrl: "",                       // paste the Google Maps share link to show the Get Directions button
+    mapsUrl: "https://maps.app.goo.gl/8eFNhCftjgxNM4XY9?g_st=aw",   // Get Directions button
   },
 
   // Optional background music. Leave `src` empty to keep the toggle hidden.
